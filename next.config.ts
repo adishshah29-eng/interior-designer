@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // @ts-ignore - Some TS versions might not have this in NextConfig types yet
+  allowedDevOrigins: ['192.168.1.188'],
 };
 
 export default nextConfig;
