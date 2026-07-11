@@ -44,8 +44,8 @@ export default function Services() {
             transition={{ duration: 0.8 }}
             className="sticky top-32"
           >
-            <span className="text-xs uppercase tracking-widest font-sans opacity-50 mb-8 block">Our Expertise</span>
-            <h2 className="font-serif text-5xl md:text-7xl leading-none">
+            <span className="text-xs uppercase tracking-widest font-sans opacity-50 mb-8 block text-center md:text-left">Our Expertise</span>
+            <h2 className="font-serif text-4xl md:text-7xl leading-none text-center md:text-left">
               Services &<br/>Disciplines
             </h2>
           </motion.div>
@@ -73,7 +73,7 @@ export default function Services() {
                 >
                   <div className="flex items-start gap-8 md:gap-16">
                     <span className="font-sans text-xs opacity-50 pt-2">{service.number}</span>
-                    <h3 className="font-serif text-3xl md:text-5xl group-hover:opacity-70 transition-opacity">
+                    <h3 className="font-serif text-2xl md:text-5xl group-hover:opacity-70 transition-opacity">
                       {service.title}
                     </h3>
                   </div>

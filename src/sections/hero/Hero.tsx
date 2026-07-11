@@ -19,9 +19,9 @@ export default function Hero() {
         
         {/* Hero Text Overlaid on the background image (so it's hidden by the cover layer initially) */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-foreground font-serif tracking-widest pointer-events-none z-10">
-          <h1 className="text-7xl md:text-[10vw] leading-none text-center mix-blend-overlay">
+          <h1 className="text-5xl md:text-[10vw] leading-none text-center mix-blend-overlay">
             Adish<br/>
-            <span className="text-2xl md:text-[3vw] block mt-2">Architecture</span>
+            <span className="text-xl md:text-[3vw] block mt-2">Architecture</span>
           </h1>
         </div>
 

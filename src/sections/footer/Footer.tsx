@@ -28,7 +28,7 @@ export default function Footer() {
           viewport={{ once: true }}
           transition={{ duration: 1, delay: shouldReduceMotion ? 0 : 0.2 }}
         >
-          <h2 className="font-serif text-6xl md:text-8xl leading-none">
+          <h2 className="font-serif text-5xl md:text-8xl leading-none">
             Portfolio
           </h2>
         </motion.div>
