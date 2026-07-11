@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "architecture": {
+      "source": "FerroxLabs/wayland",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/architecture/SKILL.md",
+      "computedHash": "4b3def7011e66b8d72cc53a7106219fbe4381d6ad027f3d60ecae70790367f0b"
+    },
+    "co-founder": {
+      "source": "gvkhosla/founder-skills",
+      "sourceType": "github",
+      "skillPath": "legacy/skills/partner/co-founder/SKILL.md",
+      "computedHash": "f3d1b960cb479f3c999978fcbccf5abc71aa18caa59f03e233207eb32496ba72"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "648a7334f3dd6cc826e35d12c48318534caf75a2176d78ef1abd8e4a3cd15334"
+    }
+  }
+}
