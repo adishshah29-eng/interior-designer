@@ -172,14 +172,14 @@ export const InkReveal: React.FC<InkRevealProps> = ({
     }
   }, [lifetime, maskColor]);
 
-  // 10. Preserve existing mouse behavior
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  // 10. Preserve existing mouse behavior and add touch behavior
+  const handleMove = (clientX: number, clientY: number) => {
     const container = containerRef.current;
     if (!container) return;
 
     const rect = container.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
 
     const wobbleX = (Math.random() - 0.5) * (stampRadius * 0.2);
     const wobbleY = (Math.random() - 0.5) * (stampRadius * 0.2);
@@ -196,6 +196,16 @@ export const InkReveal: React.FC<InkRevealProps> = ({
 
     if (stampsRef.current.length === 1 && !isHoveringRef.current) {
       animationFrameRef.current = requestAnimationFrame(loop);
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    handleMove(e.clientX, e.clientY);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length > 0) {
+      handleMove(e.touches[0].clientX, e.touches[0].clientY);
     }
   };
 
@@ -225,6 +235,9 @@ export const InkReveal: React.FC<InkRevealProps> = ({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onTouchMove={handleTouchMove}
+      onTouchStart={handleMouseEnter}
+      onTouchEnd={handleMouseLeave}
       style={{ cursor: "none" }}
     >
       <canvas

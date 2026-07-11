@@ -35,7 +35,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${playfair.variable} antialiased`}
     >
-      <body className="flex flex-col font-sans bg-[#0c0c0c] text-[#f2f2f2] noise-bg pb-[72px] md:pb-0">
+      <body className="flex flex-col font-sans bg-[#0c0c0c] text-[#f2f2f2] noise-bg">
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

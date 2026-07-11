@@ -146,15 +146,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Sticky Mobile CTA Bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 p-4 bg-background/80 backdrop-blur-md border-t border-border-subtle shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
-        <button 
-          onClick={() => setIsDrawerOpen(true)}
-          className="w-full bg-foreground text-background font-sans text-sm uppercase tracking-widest min-h-[48px] rounded-sm font-medium active:scale-[0.98] transition-transform flex items-center justify-center"
-        >
-          Let's Talk
-        </button>
-      </div>
+
 
       <ContactDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
     </>
