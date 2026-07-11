@@ -13,6 +13,12 @@
       "skillPath": "legacy/skills/partner/co-founder/SKILL.md",
       "computedHash": "f3d1b960cb479f3c999978fcbccf5abc71aa18caa59f03e233207eb32496ba72"
     },
+    "mobile-responsive": {
+      "source": "ominou5/funnel-architect-plugin",
+      "sourceType": "github",
+      "skillPath": "skills/mobile-responsive/SKILL.md",
+      "computedHash": "35c0f856abb51b298616fa95c9b411e71c34851f5be2d366d7dfaf333ba4de22"
+    },
     "ui-ux-pro-max": {
       "source": "nextlevelbuilder/ui-ux-pro-max-skill",
       "sourceType": "github",

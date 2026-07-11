@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import MagneticButton from "./ui/MagneticButton";
 import ContactDrawer from "./ContactDrawer";
@@ -9,6 +10,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ export default function Navbar() {
         setIsScrolled(false);
       }
 
-      if (currentScrollY > 100 && !isDrawerOpen) {
+      if (currentScrollY > 100 && !isDrawerOpen && !isMobileMenuOpen) {
         if (currentScrollY > lastScrollY.current) {
           setIsHidden(true);
         } else {
@@ -36,7 +38,23 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isDrawerOpen]);
+  }, [isDrawerOpen, isMobileMenuOpen]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isMobileMenuOpen]);
+
+  const navLinks = [
+    { name: 'Projects', href: '#projects' },
+    { name: 'Stories', href: '#stories' },
+    { name: 'Services', href: '#services' },
+    { name: 'About', href: '#about' },
+  ];
 
   return (
     <>
@@ -46,12 +64,12 @@ export default function Navbar() {
             ? "bg-background py-4 border-b border-border-subtle shadow-lg pointer-events-auto" 
             : "bg-transparent py-5 mix-blend-difference pointer-events-none"
         } ${
-          isHidden ? "-translate-y-full" : "translate-y-0"
+          isHidden && !isMobileMenuOpen ? "-translate-y-full" : "translate-y-0"
         }`}
       >
         
         {/* Left: Logo & Title */}
-        <div className={`flex items-center gap-6 ${!isScrolled && "pointer-events-auto"}`}>
+        <div className={`flex items-center gap-6 ${(!isScrolled || isMobileMenuOpen) && "pointer-events-auto"} relative z-50`}>
           <div className="font-serif italic text-2xl md:text-3xl pr-4">
             Adish
           </div>
@@ -66,26 +84,77 @@ export default function Navbar() {
         </div>
 
         {/* Right: Links & Let's Talk Button */}
-        <div className={`flex items-center gap-8 ${!isScrolled && "pointer-events-auto"}`}>
-          {/* Links */}
+        <div className={`flex items-center gap-4 md:gap-8 ${(!isScrolled || isMobileMenuOpen) && "pointer-events-auto"} relative z-50`}>
+          {/* Desktop Links */}
           <div className="hidden lg:flex items-center gap-6 font-sans text-xs tracking-wide mr-4">
-            <a href="#projects" className="hover:opacity-70 transition-opacity">Projects</a>
-            <a href="#stories" className="hover:opacity-70 transition-opacity">Stories</a>
-            <a href="#services" className="hover:opacity-70 transition-opacity">Services</a>
-            <a href="#about" className="hover:opacity-70 transition-opacity">About</a>
+            {navLinks.map((link) => (
+              <a key={link.name} href={link.href} className="hover:opacity-70 transition-opacity min-h-[48px] flex items-center">
+                {link.name}
+              </a>
+            ))}
           </div>
 
-          <MagneticButton>
-            <button 
-              onClick={() => setIsDrawerOpen(true)}
-              className="px-6 py-3 rounded-full border border-border-subtle font-sans text-xs uppercase tracking-widest hover:bg-hover transition-colors bg-black/20 backdrop-blur-sm pointer-events-auto"
-            >
-              Let's Talk
-            </button>
-          </MagneticButton>
+          <div className="hidden md:block">
+            <MagneticButton>
+              <button 
+                onClick={() => setIsDrawerOpen(true)}
+                className="px-6 py-3 min-h-[48px] rounded-full border border-border-subtle font-sans text-xs uppercase tracking-widest hover:bg-hover transition-colors bg-black/20 backdrop-blur-sm pointer-events-auto"
+              >
+                Let's Talk
+              </button>
+            </MagneticButton>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="lg:hidden w-12 h-12 flex flex-col items-center justify-center gap-1.5 pointer-events-auto"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle Menu"
+          >
+            <span className={`w-6 h-[1px] bg-current transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+            <span className={`w-6 h-[1px] bg-current transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`} />
+            <span className={`w-6 h-[1px] bg-current transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+          </button>
         </div>
-        
       </nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-30 bg-background flex flex-col justify-center items-center pointer-events-auto"
+          >
+            <div className="flex flex-col items-center gap-8 text-center w-full px-8">
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.name}
+                  href={link.href}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 * i }}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="font-serif text-4xl w-full py-4 active:opacity-70 transition-opacity min-h-[64px] flex items-center justify-center"
+                >
+                  {link.name}
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Sticky Mobile CTA Bar */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 p-4 bg-background/80 backdrop-blur-md border-t border-border-subtle shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+        <button 
+          onClick={() => setIsDrawerOpen(true)}
+          className="w-full bg-foreground text-background font-sans text-sm uppercase tracking-widest min-h-[48px] rounded-sm font-medium active:scale-[0.98] transition-transform flex items-center justify-center"
+        >
+          Let's Talk
+        </button>
+      </div>
 
       <ContactDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
     </>
