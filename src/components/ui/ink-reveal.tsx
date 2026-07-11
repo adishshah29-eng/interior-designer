@@ -231,14 +231,14 @@ export const InkReveal: React.FC<InkRevealProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-full overflow-hidden ${className}`}
+      className={`relative w-full h-full overflow-hidden touch-none ${className}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onTouchMove={handleTouchMove}
       onTouchStart={handleMouseEnter}
       onTouchEnd={handleMouseLeave}
-      style={{ cursor: "none" }}
+      style={{ cursor: "none", touchAction: "none" }}
     >
       <canvas
         ref={canvasRef}
